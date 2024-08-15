@@ -8,7 +8,7 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Add your register form backend logic here
+   
     navigate("/create-password");
   };
 

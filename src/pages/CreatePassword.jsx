@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaPlane } from "react-icons/fa"; 
+import { FaPlane } from "react-icons/fa";
 
 const CreatePassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+      // Proceed with form submission logic, e.g., sending data to the server
+      console.log("Passwords match, form can be submitted.");
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <div className="absolute top-4 left-4 flex items-center">
@@ -14,7 +29,7 @@ const CreatePassword = () => {
         <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">Create password</h2>
         <p className="text-center text-gray-600">Use a minimum of 10 characters, including letters, lowercase letters, and numbers.</p>
 
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
               <label htmlFor="password" className="sr-only">Password</label>
@@ -26,6 +41,8 @@ const CreatePassword = () => {
                 required
                 className="relative block w-full px-3 py-2 border bg-gray-100 border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
@@ -39,9 +56,13 @@ const CreatePassword = () => {
                 required
                 className="relative block w-full px-3 py-2 border bg-gray-100 border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             type="submit"
